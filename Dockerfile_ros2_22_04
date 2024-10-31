@@ -34,14 +34,36 @@ RUN apt-get update && apt-get install -y python3-dev python3-matplotlib python3-
 # RUN sed -i '6i\source "/catkin_ws/install/setup.bash"\' /ros_entrypoint.sh
 RUN apt-get update && apt-get install -y ssh build-essential gcc g++ \
     gdb clang cmake rsync tar python3 && apt-get clean
-RUN ( \
-    echo 'LogLevel DEBUG2'; \
-    echo 'PermitRootLogin yes'; \
-    echo 'PasswordAuthentication yes'; \
-    echo 'Subsystem sftp /usr/lib/openssh/sftp-server'; \
-  ) > /etc/ssh/sshd_config_test_clion \
-  && mkdir /run/sshd
-RUN useradd -m user && yes password | passwd user
-RUN usermod -s /bin/bash user
-CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config_test_clion"]
 
+# RUN ( \
+#     echo 'LogLevel DEBUG2'; \
+#     echo 'PermitRootLogin yes'; \
+#     echo 'PasswordAuthentication yes'; \
+#     echo 'Subsystem sftp /usr/lib/openssh/sftp-server'; \
+#   ) > /etc/ssh/sshd_config_test_clion \
+#   && mkdir /run/sshd
+# RUN useradd -m user && yes password | passwd user
+# RUN usermod -s /bin/bash user
+# CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config_test_clion"]
+
+ENV ROS2_WS /home/ros2_ws
+
+# RUN mkdir -p $ROS2_WS/src/open_vins
+
+# COPY . $ROS2_WS/src/open_vins
+
+# RUN cd $ROS2_WS &&\
+#     rosdep update &&\
+#     rosdep install --from-paths src --ignore-src -r -y
+
+# RUN cd $ROS2_WS &&\
+#     . /opt/ros/humble/setup.sh &&\
+#     colcon build --symlink-install
+
+RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+RUN echo "source $ROS2_WS/install/setup.bash" >> ~/.bashrc
+
+WORKDIR $ROS2_WS
+
+# Set the entrypoint
+ENTRYPOINT ["/bin/bash"]

@@ -32,11 +32,12 @@ using namespace ov_msckf;
 using namespace std;
 
 #if ROS_AVAILABLE == 1
-sensor_msgs::PointCloud2 ROSVisualizerHelper::get_ros_pointcloud(const std::vector<Eigen::Vector3d> &feats) {
+sensor_msgs::PointCloud2 ROSVisualizerHelper::get_ros_pointcloud(const std::vector<Eigen::Vector3d> &feats,
+                                                                        std::string global_frame) {
 
   // Declare message and sizes
   sensor_msgs::PointCloud2 cloud;
-  cloud.header.frame_id = "global";
+  cloud.header.frame_id = global_frame;
   cloud.header.stamp = ros::Time::now();
   cloud.width = feats.size();
   cloud.height = 1;
@@ -90,11 +91,12 @@ tf::StampedTransform ROSVisualizerHelper::get_stamped_transform_from_pose(const 
 
 #if ROS_AVAILABLE == 2
 sensor_msgs::msg::PointCloud2 ROSVisualizerHelper::get_ros_pointcloud(std::shared_ptr<rclcpp::Node> node,
-                                                                      const std::vector<Eigen::Vector3d> &feats) {
+                                                                      const std::vector<Eigen::Vector3d> &feats,
+                                                                      std::string global_frame) {
 
   // Declare message and sizes
   sensor_msgs::msg::PointCloud2 cloud;
-  cloud.header.frame_id = "global";
+  cloud.header.frame_id = global_frame;
   cloud.header.stamp = node->now();
   cloud.width = feats.size();
   cloud.height = 1;

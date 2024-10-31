@@ -206,6 +206,10 @@ protected:
   // Files and if we should save total state
   bool save_total_state = false;
   std::ofstream of_state_est, of_state_std, of_state_gt;
+
+  std::string imu_frame = "imu_frame";
+  std::string global_frame = "global_frame";
+
 };
 
 } // namespace ov_msckf

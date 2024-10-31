@@ -59,7 +59,7 @@ public:
    * @param feats Vector of features we will convert into ros format
    * @return ROS pointcloud
    */
-  static sensor_msgs::PointCloud2 get_ros_pointcloud(const std::vector<Eigen::Vector3d> &feats);
+  static sensor_msgs::PointCloud2 get_ros_pointcloud(const std::vector<Eigen::Vector3d> &feats, std::string global_frame);
 
   /**
    * @brief Given a ov_type::PoseJPL this will convert into the ros format.
@@ -80,7 +80,7 @@ public:
    * @param feats Vector of features we will convert into ros format
    * @return ROS pointcloud
    */
-  static sensor_msgs::msg::PointCloud2 get_ros_pointcloud(std::shared_ptr<rclcpp::Node> node, const std::vector<Eigen::Vector3d> &feats);
+  static sensor_msgs::msg::PointCloud2 get_ros_pointcloud(std::shared_ptr<rclcpp::Node> node, const std::vector<Eigen::Vector3d> &feats, std::string global_frame);
 
   /**
    * @brief Given a ov_type::PoseJPL this will convert into the ros format.
